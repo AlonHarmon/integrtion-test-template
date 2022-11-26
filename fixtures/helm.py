@@ -4,6 +4,11 @@ import os
 
 
 @pytest.fixture
+def deployment_config():
+    return {'<put here youre integration test configs>': 'bar'}
+
+
+@pytest.fixture
 def cluster_creds():
     return {'username': os.getenv('K8S_USERNAME'),
             'password': os.getenv('K8S_PASS'),
@@ -23,5 +28,7 @@ def login_to_cluster(cluster_creds):
 
 
 @pytest.fixture
-def install_chart(login_to_cluster, chart):
-    subprocess.run(f'helm install {chart}')
+def install_chart(login_to_cluster, chart, deplyment_config):
+    subprocess.run(f'helm install integration-test-release {chart}')
+    yield deployment_config
+    subprocess.run('helm uninstall integration-test-release')
