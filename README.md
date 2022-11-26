@@ -1,4 +1,10 @@
 # integrtion-test-template
+This is a template for integration / e2e test that includes support for:
+  - deploying application using helm
+  - pushing messages to rabbit mq
+  - waiting and asserting on messages from rabbitmq
+  - waiting and asserting on files written to s3
+
 
 ## config env vars
 | name   |      description      |  deafult |
