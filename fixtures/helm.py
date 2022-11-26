@@ -24,11 +24,11 @@ def chart():
 def login_to_cluster(cluster_creds):
     subprocess.run(['kubectl', 'config', 'set-credentials', cluster_creds['cluster'],
      '--username',  cluster_creds['username'],
-     '--password', cluster_creds['password']])
+     '--password', cluster_creds['password']], check=True)
 
 
 @pytest.fixture
 def install_chart(login_to_cluster, chart, deployment_config):
-    subprocess.run(['helm', 'install', 'integration-test-release', chart])
+    subprocess.run(['helm', 'install', 'integration-test-release', chart], check=True)
     yield deployment_config
     subprocess.run(['helm', 'uninstall', 'integration-test-release'])
