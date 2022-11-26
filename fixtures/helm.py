@@ -29,6 +29,6 @@ def login_to_cluster(cluster_creds):
 
 @pytest.fixture
 def install_chart(login_to_cluster, chart, deployment_config):
-    subprocess.run(['helm', 'install', 'integration-test-release', chart], check=True)
+    subprocess.run(['helm', 'install', '--atomic', 'integration-test-release', chart], check=True)
     yield deployment_config
     subprocess.run(['helm', 'uninstall', 'integration-test-release'])
